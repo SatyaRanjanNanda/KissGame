@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiss Game</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #ffcccb;
+            font-family: Arial, sans-serif;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 75vh;
+            max-width: 700px;
+            max-height: 700px;
+            margin: auto;
+            overflow: hidden;
+            background: #ffe4e1;
+        }
+        #character1, #character2 {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            transition: left 0.5s, right 0.5s;
+        }
+        #character1 {
+            left: 38%;
+            bottom: 80px;
+        }
+        #character2 {
+            right: 38%;
+            bottom: 80px;
+        }
+        .nameLabel {
+            position: absolute;
+            width: 150px;
+            text-align: center;
+            font-weight: bold;
+        }
+        #nameLabel1 {
+            left: 20%;
+            bottom: 50px;
+        }
+        #nameLabel2 {
+            right: 20%;
+            bottom: 50px;
+        }
+        .dialogue {
+            position: absolute;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-style: italic;
+            width: 150px;
+        }
+        #dialogue1 {
+            top: 15%;
+            left: 25%;
+        }
+        #dialogue2 {
+            top: 15%;
+            right: 25%;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kiss Your Love! 💋</h1>
+    <input type="text" id="name1" placeholder="Enter female's name">
+    <input type="text" id="name2" placeholder="Enter male's name">
+    <button onclick="startGame()">Start Game</button>
+    <div id="gameContainer">
+        <p id="dialogue1" class="dialogue"></p>
+        <p id="dialogue2" class="dialogue"></p>
+        <img id="character1" src="./assests/img/woman.png">
+        <span id="nameLabel1" class="nameLabel"></span>
+        <img id="character2" src="./assests/img/man.png">
+        <span id="nameLabel2" class="nameLabel"></span>
+    </div>
+    <button onmousedown="kiss()" onmouseup="resetPositions()">Kiss 💋</button>
+    
+    <script>
+        const femaleConversations = [
+            "{name1}: You're so handsome! 😍", 
+            "{name1}: I could kiss you forever! 💖", 
+            "{name1}: You're my dream come true! 😘", 
+            "{name1}: This moment is perfect! 💕"
+        ];
+        const maleConversations = [
+            "{name2}: You're the love of my life! ❤️", 
+            "{name2}: I can't resist you! 💋", 
+            "{name2}: You're my princess! 👑", 
+            "{name2}: This is the best kiss ever! 💞"
+        ];
+        let convoIndex = 0;
+
+        function startGame() {
+            let name1 = document.getElementById("name1").value || "You";
+            let name2 = document.getElementById("name2").value || "Love";
+            document.getElementById("nameLabel1").innerText = name1;
+            document.getElementById("nameLabel2").innerText = name2;
+        }
+        
+        function kiss() {
+            let name1 = document.getElementById("name1").value || "You";
+            let name2 = document.getElementById("name2").value || "Love";
+            document.getElementById("character1").style.left = "42.17%";
+            document.getElementById("character2").style.right = "42.17%";
+            
+            if (convoIndex >= femaleConversations.length) convoIndex = 0;
+            setTimeout(() => {
+                document.getElementById("dialogue1").innerText = femaleConversations[convoIndex].replace("{name1}", name1);
+                document.getElementById("dialogue2").innerText = maleConversations[convoIndex].replace("{name2}", name2);
+                convoIndex++;
+            }, 500);
+        }
+        
+        function resetPositions() {
+            setTimeout(() => {
+                document.getElementById("character1").style.left = "35%";
+                document.getElementById("character2").style.right = "35%";
+                document.getElementById("dialogue1").innerText = "";
+                document.getElementById("dialogue2").innerText = "";
+            }, 500);
+        }
+    </script>
+</body>
+</html>
